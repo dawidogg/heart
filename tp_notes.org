@@ -1,0 +1,45 @@
+* Touchpad project notes
+  - https://docs.kernel.org/input/input.html#event-interface
+	#+begin_src C
+struct input_event {
+	struct timeval time;
+	unsigned short type;
+	unsigned short code;
+	unsigned int value;
+};
+	#+end_src
+  - types and codes
+	+ [[file:input_event_codes.h]]
+  - Input event types
+	+ *EV_ABS* (type 3): Used to describe absolute axis value changes, e.g. describing the coordinates of a touch on a touchscreen.
+	+ *EV_MSC* (type 4): Used to describe miscellaneous input data that do not fit into other types.
+	+ *EV_KEY* (type 1): Used to describe state changes of keyboards, buttons, or other key-like devices.
+  - Input event codes
+#+begin_quote
+2.4.2. Touchscreens
+ABS_{X,Y} must be reported with the location of the touch. BTN_TOUCH must be used to report when a touch is active on the screen. BTN_{MOUSE,LEFT,MIDDLE,RIGHT} must not be reported as the result of touch contact. BTN_TOOL_<name> events should be reported where possible.
+
+For new hardware, INPUT_PROP_DIRECT should be set.
+
+2.4.3. Trackpads
+Legacy trackpads that only provide relative position information must report events like mice described above.
+
+Trackpads that provide absolute touch position must report ABS_{X,Y} for the location of the touch. BTN_TOUCH should be used to report when a touch is active on the trackpad. Where multi-finger support is available, BTN_TOOL_<name> should be used to report the number of touches active on the trackpad.
+
+For new hardware, INPUT_PROP_POINTER should be set.
+#+end_quote
+
+#+begin_src C
+#include <stdio.h>
+#define GET_SIZE(a) 1 << (32-__builtin_clz((a)))
+printf("%d", GET_SIZE(1));
+#+end_src
+
+#+RESULTS:
+: 2
+
+* Heart function
+#+DOWNLOADED: file:///home/dawidogg/Pictures/Screenshot_20231116_223003.png @ 2023-11-16 22:30:20
+[[file:images/Heart_function/2023-11-16_22-30-20_Screenshot_20231116_223003.png]]
+
+* [[file:multi-touch-protocol.txt][multi-touch-protocol]]
