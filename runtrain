@@ -1,0 +1,2 @@
+gcc train.c -g -lm -o train
+./train

@@ -75,11 +75,11 @@ int main() {
 				char timestamp[32];
 				char filename[64];
 				get_timestamp(timestamp);
-				sprintf(filename, "./data/%s_1.txt", timestamp);
+				sprintf(filename, "./data_empty/%s_1.txt", timestamp);
 				FILE *finger1 = fopen(filename, "w");
-				sprintf(filename, "./data/%s_2.txt", timestamp);
+				sprintf(filename, "./data_empty/%s_2.txt", timestamp);
 				FILE *finger2 = fopen(filename, "w");
-				sprintf(filename, "./data/%s_result.txt", timestamp);
+				sprintf(filename, "./data_empty/%s_result.txt", timestamp);
 				FILE *result_stream = fopen(filename, "w");
 
 				for (int i = 1; i <= arr_size_p(heart_shape[0]); i++) {
@@ -99,6 +99,12 @@ int main() {
 				fclose(finger2);
 				fclose(result_stream);
 				printf("\nSaved as %s\n\n", timestamp);
+
+				char plot_command[64];
+				sprintf(plot_command, "./p %s >nul 2>nul &", timestamp);
+				system(plot_command);
+				ignored_count[0] = 0;
+				ignored_count[1] = 0;
 			}
 			continue;
 		} else printed = 0;

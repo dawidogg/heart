@@ -122,7 +122,7 @@ void analyze_shape(Point **point1_ref, Point **point2_ref, double *result) {
 		curve_rate_left_upper > 0.01 && curve_rate_left_lower < 0.01) {
 		printf("Heart!\n");
 	} else {
-		printf("Not heart.\n");
+		printf("\nNot heart.\n");
 	}
 	result[0] = curve_rate_left_upper;
 	result[1] =	curve_rate_left_lower;
