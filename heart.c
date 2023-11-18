@@ -59,16 +59,18 @@ void analyze_shape(Point **point1_ref, Point **point2_ref, double *result) {
 		p_left_size = arr_size_p(point1);
 		p_right = point2+1;
 		p_right_size = arr_size_p(point2);
-		*point1_ref = point2;
-		*point2_ref = point1;
+		*point1_ref = point1;
+		*point2_ref = point2;
 	} else {
 		p_left = point2+1;
 		p_left_size = arr_size_p(point2);
 		p_right = point1+1;
 		p_right_size = arr_size_p(point1);
+		*point1_ref = point2;
+		*point2_ref = point1;
 	}
-	p_print("First point of left half:", p_left[0]);
-	p_print("First point of right half:", p_right[0]);
+	/* p_print("First point of left half:", p_left[0]); */
+	/* p_print("First point of right half:", p_right[0]); */
 
 	Point p_left_vector = p_subtract(p_left[p_left_size-1], p_left[0]);
 	Point p_right_vector = p_subtract(p_right[p_right_size-1], p_right[0]);
@@ -111,10 +113,10 @@ void analyze_shape(Point **point1_ref, Point **point2_ref, double *result) {
 	double curve_rate_right_lower = get_concativity(p_right, rightmost, p_right_size);
 	double curve_rate_left_upper = -get_concativity(p_left, 0, leftmost);
 	double curve_rate_left_lower = -get_concativity(p_left, leftmost, p_left_size);	
-	printf("Right half's upper concativity rate: %lf\n", curve_rate_right_upper);
-	printf("Right half's lower concativity rate: %lf\n", curve_rate_right_lower);
-	printf("Left half's upper concativity rate: %lf\n", curve_rate_left_upper);
-	printf("Left half's lower concativity rate: %lf\n", curve_rate_left_lower);
+	/* printf("Right half's upper concativity rate: %lf\n", curve_rate_right_upper); */
+	/* printf("Right half's lower concativity rate: %lf\n", curve_rate_right_lower); */
+	/* printf("Left half's upper concativity rate: %lf\n", curve_rate_left_upper); */
+	/* printf("Left half's lower concativity rate: %lf\n", curve_rate_left_lower); */
 	
 	if (curve_rate_right_upper > 0.01 && curve_rate_right_lower < 0.01 &&
 		curve_rate_left_upper > 0.01 && curve_rate_left_lower < 0.01) {
@@ -122,8 +124,8 @@ void analyze_shape(Point **point1_ref, Point **point2_ref, double *result) {
 	} else {
 		printf("Not heart.\n");
 	}
-	result[0] = curve_rate_right_upper;
-	result[1] =	curve_rate_right_lower;
-	result[2] =	curve_rate_left_upper;
-	result[3] =	curve_rate_left_lower;
+	result[0] = curve_rate_left_upper;
+	result[1] =	curve_rate_left_lower;
+	result[2] =	curve_rate_right_upper;
+	result[3] =	curve_rate_right_lower;
 }

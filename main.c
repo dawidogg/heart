@@ -62,7 +62,7 @@ int main() {
 		// ev.type, ev.code, ev.value
 		if (ev.type == EV_KEY && ev.code == BTN_TOOL_DOUBLETAP)	{
 			two_fingers = ev.value;
-			printf("Two fingers: %d\n", two_fingers);
+			// printf("Two fingers: %d\n", two_fingers);
 		}
 
 		if (!two_fingers) {
@@ -88,15 +88,17 @@ int main() {
 				for (int i = 1; i <= arr_size_p(heart_shape[1]); i++) {
 					fprintf(finger2, "%lf %lf\n", heart_shape[1][i].x, heart_shape[1][i].y);
 				}
-				for (int i = 0; i < 4; i++)
+				for (int i = 0; i < 4; i++) {
 					fprintf(result_stream, "%lf ", result[i]);
+					printf("%lf ", result[i]);
+				}
 				arr_shrink_p(&heart_shape[0], 0);
 				arr_shrink_p(&heart_shape[1], 0);
 				printed = 1;
 				fclose(finger1);
 				fclose(finger2);
 				fclose(result_stream);
-				exit(1);
+				printf("\nSaved as %s\n\n", timestamp);
 			}
 			continue;
 		} else printed = 0;
