@@ -83,12 +83,18 @@ void analyze_shape(Point **point1_ref, Point **point2_ref, double *result) {
 	AB = (Point){A,B};
 	C = p_right[0].x / p_right_vector.x - p_right[0].y / p_right_vector.y;
 	int rightmost = 0;
+	double best_dist = fabs(p_dot_product(AB, p_right[rightmost]) - C) / p_norm(AB);
 	for (int i = 0; i < p_right_size; i++) {
 		double current_dist = fabs(p_dot_product(AB, p_right[i]) - C) / p_norm(AB);
-		double best_dist = fabs(p_dot_product(AB, p_right[rightmost]) - C) / p_norm(AB);
+		best_dist = fabs(p_dot_product(AB, p_right[rightmost]) - C) / p_norm(AB);
 		if (current_dist > best_dist)
 			rightmost = i;
 	}
+
+	double p_right_vector_norm =  p_norm(p_right_vector);
+//	printf("p_right_vector_norm = %lf, best_dist = %lf\n", p_right_vector_norm, best_dist);
+	double ratio_right = p_right_vector_norm / best_dist;
+
 	A = 1.0/p_left_vector.x;
 	B = -1.0/p_left_vector.y;
 	AB = (Point){A,B};
@@ -96,36 +102,30 @@ void analyze_shape(Point **point1_ref, Point **point2_ref, double *result) {
 	int leftmost = 0;
 	for (int i = 0; i < p_left_size; i++) {
 		double current_dist = fabs(p_dot_product(AB, p_left[i]) - C) / p_norm(AB);
-		double best_dist = fabs(p_dot_product(AB, p_left[leftmost]) - C) / p_norm(AB);
+		best_dist = fabs(p_dot_product(AB, p_left[leftmost]) - C) / p_norm(AB);
 		if (current_dist > best_dist)
 			leftmost = i;
 	}
-	/* p_print("Rightmost point:", p_right[rightmost]); */
-	/* p_print("Leftmost point:", p_left[leftmost]); */
-	/* FILE *extremes = fopen("./point_data/rightmost.txt", "w"); */
-	/* fprintf(extremes, "%d %d\n", (int)(p_right[rightmost].x), (int)(p_right[rightmost].y)); */
-	/* fclose(extremes); */
-	/* extremes = fopen("./point_data/leftmost.txt", "w"); */
-	/* fprintf(extremes, "%d %d\n", (int)(p_left[leftmost].x), (int)(p_left[leftmost].y)); */
-	/* fclose(extremes); */
+
+	double p_left_vector_norm =  p_norm(p_left_vector);
+//	printf("p_left_vector_norm = %lf, best_dist = %lf\n", p_left_vector_norm, best_dist);
+	double ratio_left = p_left_vector_norm / best_dist;
 
 	double curve_rate_right_upper = get_concativity(p_right, 0, rightmost);
 	double curve_rate_right_lower = get_concativity(p_right, rightmost, p_right_size);
 	double curve_rate_left_upper = -get_concativity(p_left, 0, leftmost);
 	double curve_rate_left_lower = -get_concativity(p_left, leftmost, p_left_size);	
-	/* printf("Right half's upper concativity rate: %lf\n", curve_rate_right_upper); */
-	/* printf("Right half's lower concativity rate: %lf\n", curve_rate_right_lower); */
-	/* printf("Left half's upper concativity rate: %lf\n", curve_rate_left_upper); */
-	/* printf("Left half's lower concativity rate: %lf\n", curve_rate_left_lower); */
 	
-	if (curve_rate_right_upper > 0.01 && curve_rate_right_lower < 0.01 &&
-		curve_rate_left_upper > 0.01 && curve_rate_left_lower < 0.01) {
-		printf("Heart!\n");
-	} else {
-		printf("\nNot heart.\n");
-	}
+	/* if (curve_rate_right_upper > 0.01 && curve_rate_right_lower < 0.01 && */
+	/* 	curve_rate_left_upper > 0.01 && curve_rate_left_lower < 0.01) { */
+	/* 	printf("Heart!\n"); */
+	/* } else { */
+	/* 	printf("\nNot heart.\n"); */
+	/* } */
 	result[0] = curve_rate_left_upper;
 	result[1] =	curve_rate_left_lower;
-	result[2] =	curve_rate_right_upper;
-	result[3] =	curve_rate_right_lower;
+	result[2] = ratio_left;
+	result[3] =	curve_rate_right_upper;
+	result[4] =	curve_rate_right_lower;
+	result[5] = ratio_right;
 }

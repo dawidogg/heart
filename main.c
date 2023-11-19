@@ -8,7 +8,18 @@
 #include "point.h"
 #include "heart.h"
 
+/* Correct heart detection: 90.689655% */
+/* Correct not heart detection: 49.444444% */
+/* [312.024329 -300.641444 -20.667788 0.625570] */
+
+/* Correct heart detection: 93.103448% */
+/* Correct not heart detection: 50.555556% */
+/* [283.023828 -191.936567 -28.469263 0.859430] */
+
+double weight[3] = {283.023828, -191.936567, -28.469263};
+
 const int IGNORE_FIRST = 8;
+const char *output_dir = "data_empty";
 
 void arr_test_p() {
 	Point *bilge;
@@ -69,17 +80,18 @@ int main() {
 			if (!printed) {
 				smooth_shape(&heart_shape[0]);
 				smooth_shape(&heart_shape[1]);
-				double result[4];
+				double result[6];
 				analyze_shape(&heart_shape[0], &heart_shape[1], result);
+				goto SkipWriting;
 
 				char timestamp[32];
 				char filename[64];
 				get_timestamp(timestamp);
-				sprintf(filename, "./data_empty/%s_1.txt", timestamp);
+				sprintf(filename, "./%s/%s_1.txt", output_dir, timestamp);
 				FILE *finger1 = fopen(filename, "w");
-				sprintf(filename, "./data_empty/%s_2.txt", timestamp);
+				sprintf(filename, "./%s/%s_2.txt", output_dir, timestamp);
 				FILE *finger2 = fopen(filename, "w");
-				sprintf(filename, "./data_empty/%s_result.txt", timestamp);
+				sprintf(filename, "./%s/%s_result.txt", output_dir, timestamp);
 				FILE *result_stream = fopen(filename, "w");
 
 				for (int i = 1; i <= arr_size_p(heart_shape[0]); i++) {
@@ -88,23 +100,42 @@ int main() {
 				for (int i = 1; i <= arr_size_p(heart_shape[1]); i++) {
 					fprintf(finger2, "%lf %lf\n", heart_shape[1][i].x, heart_shape[1][i].y);
 				}
-				for (int i = 0; i < 4; i++) {
+				for (int i = 0; i < 6; i++) {
 					fprintf(result_stream, "%lf ", result[i]);
-					printf("%lf ", result[i]);
 				}
-				arr_shrink_p(&heart_shape[0], 0);
-				arr_shrink_p(&heart_shape[1], 0);
-				printed = 1;
 				fclose(finger1);
 				fclose(finger2);
 				fclose(result_stream);
 				printf("\nSaved as %s\n\n", timestamp);
 
 				char plot_command[64];
-				sprintf(plot_command, "./p %s >nul 2>nul &", timestamp);
+				sprintf(plot_command, "./p ./%s/%s >nul 2>nul &", output_dir, timestamp);
 				system(plot_command);
+			SkipWriting:
+				printed = 1;
 				ignored_count[0] = 0;
 				ignored_count[1] = 0;
+				arr_shrink_p(&heart_shape[0], 0);
+				arr_shrink_p(&heart_shape[1], 0);
+
+				/* if ((result[0]*weight[0]*100 + result[1]*weight[1]*100 + weight[2]) > 0 && */
+				/* 	(result[3]*weight[0]*100 + result[4]*weight[1]*100 + weight[2]) > 0 && */
+				/* 	result[2] < 2 && result[5] < 2) */
+				/* 	printf("Heart!\n"); */
+				/* else */
+				/* 	printf("\nNot heart.\n"); */
+				for (int i = 0; i < 6; i++) {
+					printf("%lf ", result[i]);
+				}
+				printf("\n");
+				if ((result[0] > 2*result[1] && result[3] > 2*result[4]) &&
+					result[2] <= 2.5 && result[5] <= 2.5) {
+					printf("Heart!\n");
+					system("gwenview /home/dawidogg/ITU/5thsemester/BLG\\<3/Foti/ &");
+				} else {
+					printf("Not heart.\n");
+				}
+
 			}
 			continue;
 		} else printed = 0;
