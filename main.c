@@ -16,6 +16,7 @@ void get_timestamp(char *buff) {
 }
 
 int main(int argc, char **vargs) {
+	printf("Heart. Copyright (C) 2024 Denis Davidoglu\n");
 	int fd = open(touchpad_path, O_RDONLY);
     struct input_event ev;
 	int two_fingers = 0;
