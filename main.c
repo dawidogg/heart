@@ -79,9 +79,9 @@ int main(int argc, char **vargs) {
 				fclose(result_stream);
 				printf("\nSaved as %s\n\n", timestamp);
 
-				char plot_command[64];
-				sprintf(plot_command, "./p ./%s/%s >nul 2>nul &", output_dir, timestamp);
-				system(plot_command);
+				/* char plot_command[64]; */
+				/* sprintf(plot_command, "./p ./%s/%s >nul 2>nul &", output_dir, timestamp); */
+				/* system(plot_command); */
 			SkipWriting:
 				printed = 1;
 				ignored_count[0] = 0;
