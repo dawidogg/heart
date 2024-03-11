@@ -7,31 +7,7 @@
 #include <sys/time.h>
 #include "point.h"
 #include "heart.h"
-
-/* Correct heart detection: 90.689655% */
-/* Correct not heart detection: 49.444444% */
-/* [312.024329 -300.641444 -20.667788 0.625570] */
-
-/* Correct heart detection: 93.103448% */
-/* Correct not heart detection: 50.555556% */
-/* [283.023828 -191.936567 -28.469263 0.859430] */
-
-double weight[3] = {283.023828, -191.936567, -28.469263};
-
-const int IGNORE_FIRST = 8;
-const char *output_dir = "data_empty";
-
-void arr_test_p() {
-	Point *bilge;
-	arr_init_p(&bilge);
-	for (Point i = {1, 12}; i.x <= 70; i.x++) {
-		arr_push_p(&bilge, i);
-	}
-	arr_shrink_p(&bilge, 68);
-	for (int i = 1; i <= bilge[0].x; i++)
-		p_print("", *bilge);
-	free(bilge);
-}
+#include "config.h"
 
 void get_timestamp(char *buff) {
 	struct timeval t;
@@ -39,14 +15,8 @@ void get_timestamp(char *buff) {
 	sprintf(buff, "%ld", (t.tv_sec*1000000 + t.tv_usec));
 }
 
-int main() {
-	const char *device = "/dev/input/event6"; // Replace with your event device
-    int fd = open(device, O_RDONLY);
-    if (fd == -1) {
-        perror("Failed to open input device");
-        return 1;
-    }
-
+int main(int argc, char **vargs) {
+	int fd = open(touchpad_path, O_RDONLY);
     struct input_event ev;
 	int two_fingers = 0;
 	int *finger_arr[2];
@@ -82,7 +52,7 @@ int main() {
 				smooth_shape(&heart_shape[1]);
 				double result[6];
 				analyze_shape(&heart_shape[0], &heart_shape[1], result);
-				goto SkipWriting;
+				if (skip_writing) goto SkipWriting;
 
 				char timestamp[32];
 				char filename[64];
@@ -118,12 +88,6 @@ int main() {
 				arr_shrink_p(&heart_shape[0], 0);
 				arr_shrink_p(&heart_shape[1], 0);
 
-				/* if ((result[0]*weight[0]*100 + result[1]*weight[1]*100 + weight[2]) > 0 && */
-				/* 	(result[3]*weight[0]*100 + result[4]*weight[1]*100 + weight[2]) > 0 && */
-				/* 	result[2] < 2 && result[5] < 2) */
-				/* 	printf("Heart!\n"); */
-				/* else */
-				/* 	printf("\nNot heart.\n"); */
 				for (int i = 0; i < 6; i++) {
 					printf("%lf ", result[i]);
 				}
@@ -131,7 +95,7 @@ int main() {
 				if ((result[0] > 2*result[1] && result[3] > 2*result[4]) &&
 					result[2] <= 2.5 && result[5] <= 2.5) {
 					printf("Heart!\n");
-					system("gwenview /home/dawidogg/ITU/5thsemester/BLG\\<3/Foti/ &");
+					system(on_heart_detect_command);
 				} else {
 					printf("Not heart.\n");
 				}
@@ -153,7 +117,7 @@ int main() {
 		if (ev.type == EV_ABS && ev.code == ABS_MT_POSITION_Y) {
 			current_point[current_slot].y = ev.value;
 			ignored_count[current_slot]++;
-			if (ignored_count[current_slot] > IGNORE_FIRST)
+			if (ignored_count[current_slot] > ignore_first)
 				arr_push_p(&(heart_shape[current_slot]), current_point[current_slot]);
 		}		
 

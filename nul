@@ -1,1 +1,42 @@
 QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+kf.i18n.kuit: "Unknown subcue ':whatsthis,' in UI marker in context {@info:whatsthis, %1 the action's text}."
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-aptus-mos"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-arq"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-bay"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-bmq"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-cap"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-cine"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-cs1"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-dc2"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-drf"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-dxo"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-epson-eip"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-epson-erf"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-fff"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-hasselblad-3fr"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-iiq"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-kodak-dcs"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-kodak-kc2"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-mamiya-mef"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-mfw"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-minolta-mdc"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-mng"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-obm"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-ori"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-ptx"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-pxn"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-qtk"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-r3d"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-raw"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-rdc"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-rwl"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-rwz"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-samsung-srw"
+org.kde.kdegraphics.gwenview.lib: Unresolved mime type  "image/x-sti"
+org.kde.kdegraphics.gwenview.lib: Unresolved raw mime type  "image/x-samsung-srw"
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+org.kde.kdegraphics.gwenview.lib: Gwenview cannot apply color profile on QImage::Format_ARGB32_Premultiplied images

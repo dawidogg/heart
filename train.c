@@ -115,6 +115,5 @@ int main() {
 	kakdela();
 	printf("[%lf %lf %lf]\n", weight[0], weight[1], weight[2]);
 
-
 	return 0;
 }
